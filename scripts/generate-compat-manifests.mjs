@@ -67,6 +67,9 @@ function addFactoryComponents(target, cursorManifest, pluginDir) {
   }
 }
 
+const CLAUDE_MARKETPLACE_REPO =
+  process.env.CLAUDE_MARKETPLACE_REPO ?? "harshav167/cursor-plugins";
+
 function withRelativeLocalSource(entry) {
   if (typeof entry.source !== "string") {
     return { ...entry };
@@ -86,6 +89,22 @@ function withRelativeLocalSource(entry) {
   };
 }
 
+function withClaudeGitSubdirSource(entry) {
+  if (typeof entry.source !== "string") {
+    return { ...entry };
+  }
+
+  return {
+    ...entry,
+    source: {
+      source: "git-subdir",
+      url: CLAUDE_MARKETPLACE_REPO,
+      path: entry.source.replace(/^\.\//, ""),
+      ref: "main",
+    },
+  };
+}
+
 const cursorMarketplace = loadJSON(resolve(root, ".cursor-plugin/marketplace.json"));
 
 const claudeMarketplace = {
@@ -95,7 +114,7 @@ const claudeMarketplace = {
     ...cursorMarketplace.metadata,
     compatibility: "Claude Code",
   },
-  plugins: cursorMarketplace.plugins.map(withRelativeLocalSource),
+  plugins: cursorMarketplace.plugins.map(withClaudeGitSubdirSource),
 };
 
 const factoryMarketplace = {

@@ -11,52 +11,102 @@
   "plugins": [
     {
       "name": "teaching",
-      "source": "./teaching",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "teaching",
+        "ref": "main"
+      },
       "description": "Skill mapping, practice plans, and learning retrospectives."
     },
     {
       "name": "continual-learning",
-      "source": "./continual-learning",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "continual-learning",
+        "ref": "main"
+      },
       "description": "Incremental transcript-driven memory updates for AGENTS.md using high-signal bullet points only."
     },
     {
       "name": "cursor-team-kit",
-      "source": "./cursor-team-kit",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "cursor-team-kit",
+        "ref": "main"
+      },
       "description": "Internal team workflows used by Cursor developers for CI, code review, shipping, local automation, and verification."
     },
     {
       "name": "create-plugin",
-      "source": "./create-plugin",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "create-plugin",
+        "ref": "main"
+      },
       "description": "Scaffold and validate new Cursor plugins."
     },
     {
       "name": "ralph-loop",
-      "source": "./ralph-loop",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "ralph-loop",
+        "ref": "main"
+      },
       "description": "Iterative self-referential AI loops using the Ralph Wiggum technique."
     },
     {
       "name": "agent-compatibility",
-      "source": "./agent-compatibility",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "agent-compatibility",
+        "ref": "main"
+      },
       "description": "CLI-backed repo compatibility scans plus Cursor agents that audit startup, validation, and docs against reality."
     },
     {
       "name": "cli-for-agent",
-      "source": "./cli-for-agent",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "cli-for-agent",
+        "ref": "main"
+      },
       "description": "Patterns for designing CLIs that coding agents can run reliably: flags, help with examples, pipelines, errors, idempotency, dry-run."
     },
     {
       "name": "pr-review-canvas",
-      "source": "./pr-review-canvas",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "pr-review-canvas",
+        "ref": "main"
+      },
       "description": "Render PR diffs as interactive Cursor Canvases organized for reviewer comprehension — groups changes by importance, separates boilerplate from core logic, and highlights tricky or unexpected code."
     },
     {
       "name": "docs-canvas",
-      "source": "./docs-canvas",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "docs-canvas",
+        "ref": "main"
+      },
       "description": "Render documentation — architecture notes, API references, runbooks, and codebase walkthroughs — as a navigable Cursor Canvas with sections, table of contents, diagrams, and cross-references."
     },
     {
       "name": "cursor-sdk",
-      "source": "./cursor-sdk",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "cursor-sdk",
+        "ref": "main"
+      },
       "description": "Build apps, scripts, CI pipelines, and automations on top of the Cursor TypeScript SDK (@cursor/sdk) — runtime selection, auth, streaming, MCP, error handling, and ready-to-extend integration patterns."
     }
   ]

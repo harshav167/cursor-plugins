@@ -127,6 +127,21 @@ function expectedCompatSource(source) {
     : source;
 }
 
+function expectedClaudeSource(source) {
+  return typeof source === "string"
+    ? {
+        source: "git-subdir",
+        url: "harshav167/cursor-plugins",
+        path: source.replace(/^\.\//, ""),
+        ref: "main",
+      }
+    : source;
+}
+
+function sameJSON(left, right) {
+  return JSON.stringify(left) === JSON.stringify(right);
+}
+
 // 2. Validate each plugin
 for (const entry of marketplace.plugins ?? []) {
   const pluginDir = resolve(root, entry.source);
@@ -166,7 +181,7 @@ for (const entry of marketplace.plugins ?? []) {
     );
   }
 
-  if (claudeEntries.get(entry.name)?.source !== expectedCompatSource(entry.source)) {
+  if (!sameJSON(claudeEntries.get(entry.name)?.source, expectedClaudeSource(entry.source))) {
     fail(`Plugin "${entry.name}": Claude marketplace entry is missing or mismatched`);
   }
 
