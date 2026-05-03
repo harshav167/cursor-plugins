@@ -67,6 +67,25 @@ function addFactoryComponents(target, cursorManifest, pluginDir) {
   }
 }
 
+function withRelativeLocalSource(entry) {
+  if (typeof entry.source !== "string") {
+    return { ...entry };
+  }
+
+  if (
+    entry.source.startsWith("./") ||
+    entry.source.startsWith("/") ||
+    entry.source.includes("://")
+  ) {
+    return { ...entry };
+  }
+
+  return {
+    ...entry,
+    source: `./${entry.source}`,
+  };
+}
+
 const cursorMarketplace = loadJSON(resolve(root, ".cursor-plugin/marketplace.json"));
 
 const claudeMarketplace = {
@@ -76,7 +95,7 @@ const claudeMarketplace = {
     ...cursorMarketplace.metadata,
     compatibility: "Claude Code",
   },
-  plugins: cursorMarketplace.plugins.map((entry) => ({ ...entry })),
+  plugins: cursorMarketplace.plugins.map(withRelativeLocalSource),
 };
 
 const factoryMarketplace = {
@@ -86,7 +105,7 @@ const factoryMarketplace = {
     ...cursorMarketplace.metadata,
     compatibility: "Factory",
   },
-  plugins: cursorMarketplace.plugins.map((entry) => ({ ...entry })),
+  plugins: cursorMarketplace.plugins.map(withRelativeLocalSource),
 };
 
 writeJSON(resolve(root, ".claude-plugin/marketplace.json"), claudeMarketplace);

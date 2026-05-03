@@ -121,6 +121,12 @@ const factoryEntries = new Map(
   (factoryMarketplace.plugins ?? []).map((entry) => [entry.name, entry])
 );
 
+function expectedCompatSource(source) {
+  return typeof source === "string" && !source.startsWith("./")
+    ? `./${source}`
+    : source;
+}
+
 // 2. Validate each plugin
 for (const entry of marketplace.plugins ?? []) {
   const pluginDir = resolve(root, entry.source);
@@ -160,11 +166,11 @@ for (const entry of marketplace.plugins ?? []) {
     );
   }
 
-  if (claudeEntries.get(entry.name)?.source !== entry.source) {
+  if (claudeEntries.get(entry.name)?.source !== expectedCompatSource(entry.source)) {
     fail(`Plugin "${entry.name}": Claude marketplace entry is missing or mismatched`);
   }
 
-  if (factoryEntries.get(entry.name)?.source !== entry.source) {
+  if (factoryEntries.get(entry.name)?.source !== expectedCompatSource(entry.source)) {
     fail(`Plugin "${entry.name}": Factory marketplace entry is missing or mismatched`);
   }
 
