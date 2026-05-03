@@ -23,6 +23,8 @@
     "transcripts"
   ],
   "skills": "./skills/",
-  "agents": "./agents/",
+  "agents": [
+    "./agents/agents-memory-updater.md"
+  ],
   "hooks": "./hooks/hooks.json"
 }

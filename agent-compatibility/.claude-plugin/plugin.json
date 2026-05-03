@@ -26,5 +26,10 @@
     "workflow"
   ],
   "skills": "./skills/",
-  "agents": "./agents/"
+  "agents": [
+    "./agents/compatibility-scan-review.md",
+    "./agents/docs-reliability-review.md",
+    "./agents/startup-review.md",
+    "./agents/validation-review.md"
+  ]
 }

@@ -1,6 +1,12 @@
 #!/usr/bin/env node
 
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+} from "fs";
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 
@@ -38,10 +44,21 @@ function pickMetadata(cursorManifest) {
 }
 
 function addClaudeComponents(target, cursorManifest, pluginDir) {
-  for (const key of ["skills", "agents", "hooks", "commands", "mcpServers"]) {
+  for (const key of ["skills", "commands", "mcpServers"]) {
     if (cursorManifest[key] !== undefined) {
       target[key] = cursorManifest[key];
     }
+  }
+
+  const agentPaths = getMarkdownFiles(resolve(pluginDir, "agents"));
+  if (agentPaths.length > 0) {
+    target.agents = agentPaths;
+  }
+
+  if (existsSync(resolve(pluginDir, "hooks/hooks.json"))) {
+    target.hooks = "./hooks/hooks.json";
+  } else if (cursorManifest.hooks !== undefined) {
+    target.hooks = cursorManifest.hooks;
   }
 
   if (existsSync(resolve(pluginDir, ".mcp.json")) && target.mcpServers === undefined) {
@@ -103,6 +120,17 @@ function withClaudeGitSubdirSource(entry) {
       ref: "main",
     },
   };
+}
+
+function getMarkdownFiles(directory) {
+  if (!existsSync(directory)) {
+    return [];
+  }
+
+  return readdirSync(directory, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
+    .map((entry) => `./agents/${entry.name}`)
+    .sort();
 }
 
 const cursorMarketplace = loadJSON(resolve(root, ".cursor-plugin/marketplace.json"));

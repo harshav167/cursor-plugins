@@ -23,6 +23,6 @@
     "transcripts"
   ],
   "skills": "./skills/",
-  "hooks": "./hooks/hooks.json",
+  "hooks": "./hooks/cursor-hooks.json",
   "droids": "./agents/"
 }
