@@ -34,8 +34,10 @@ Use from `continual-learning` when transcript deltas, full sweeps, time-window s
 8. Read every targeted parent transcript fully:
    - Read JSONL files line by line from the first line through EOF.
    - Confirm EOF or otherwise prove the read covered the full file.
-   - Use read-only scout subagents for explicit user-requested `full-sweep` and `time-window` runs, normally one scout per parent transcript or per small group of very short transcripts.
-   - Require each scout to return full-read confirmation, durable memory candidates, duplicate decisions, and rejected situational items.
+   - Use exactly one read-only scout subagent per targeted parent transcript for explicit user-requested `full-sweep` and `time-window` runs.
+   - Do not bundle multiple parent transcripts into one scout.
+   - Do not ask whether to proceed after enumeration; enumeration only defines the target set.
+   - Require each scout to read one assigned parent transcript and return full-read confirmation, durable memory candidates, duplicate decisions, and rejected situational items.
    - Track a ledger of targeted, completed, blocked, skipped, and interrupted files.
    - Do not count interrupted, timed-out, failed, or partial scout reads as complete.
 9. Pull out only durable, reusable items:
@@ -94,14 +96,14 @@ Use from `continual-learning` when transcript deltas, full sweeps, time-window s
 
 - Enumerate every parent transcript for the detected host/project.
 - Ignore the incremental index as a skip filter.
-- Use read-only scout subagents to read targeted parent transcripts line by line before reconciling findings.
+- Use one read-only scout subagent per targeted parent transcript to read line by line before reconciling findings.
 - Report total transcript files, parent transcripts targeted, completed reads, skipped files, and excluded subagent transcripts.
 
 ### Time Window
 
 - Bucket parent transcripts by file mtime unless the transcript format has a more reliable session timestamp.
 - Support windows like today, yesterday, last 7 days, last 30 days, and explicit dates.
-- Use read-only scout subagents to read each targeted parent transcript line by line before reconciling findings.
+- Use one read-only scout subagent per targeted parent transcript to read line by line before reconciling findings.
 - Report the window and counts before returning a clean result.
 
 ### Current Chat

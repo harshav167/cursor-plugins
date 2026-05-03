@@ -36,7 +36,7 @@ The skill supports four modes:
 - `time-window`: user-requested review of a bounded period such as today, yesterday, last 7 days, or last month.
 - `current-chat`: user-requested mining of the live/current conversation.
 
-For `full-sweep` and `time-window`, the main agent must enumerate parent transcripts before mining: total transcript files discovered, parent transcripts targeted, subagent transcripts excluded, and any skipped files. The updater then uses read-only scouts to read targeted parent JSONL files line by line through EOF before reconciling findings. Grep, keyword searches, transcript summaries, and partial snippets are not sufficient for explicit sweeps.
+For `full-sweep` and `time-window`, the main agent must enumerate parent transcripts before mining: total transcript files discovered, parent transcripts targeted, subagent transcripts excluded, and any skipped files. The updater then launches exactly one read-only scout per targeted parent transcript. Each scout reads one parent JSONL file line by line through EOF before findings are reconciled. Enumeration is not completion, and the agent must not ask whether to proceed after enumeration. Grep, keyword searches, transcript summaries, and partial snippets are not sufficient for explicit sweeps.
 
 ## Transcript locations
 

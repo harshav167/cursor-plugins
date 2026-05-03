@@ -36,8 +36,10 @@ Use when:
    - Apply any requested time-window filter to the parent list.
    - Report the targeted parent count to the updater.
 4. For explicit user-requested sweeps, require subagent-backed full reads before findings are returned:
-   - Launch read-only scout subagents in safe batches, normally one scout per parent transcript or per small group of very short transcripts.
-   - Each scout must read assigned JSONL files line by line from start to EOF, confirm EOF, and return durable memory candidates plus rejected situational items.
+   - Launch exactly one read-only scout subagent for each targeted parent transcript.
+   - Do not bundle multiple parent transcripts into one scout for `full-sweep` or `time-window` mode.
+   - Do not ask whether to proceed after enumeration; enumeration is not completion.
+   - Each scout must read its single assigned JSONL file line by line from start to EOF, confirm EOF, and return durable memory candidates plus rejected situational items.
    - Do not accept grep-only, keyword-only, snippet-only, summary-only, or mtime-only analysis as complete.
    - Do not count interrupted, timed-out, or partial scouts as complete.
 5. Pass the mode, host, transcript root/path, targeted parent list/count, current user request, and canonical memory target `AGENTS.md` to `agents-memory-updater`.
@@ -57,7 +59,7 @@ Use when:
 - Do not mine transcript contents or edit files in the parent flow.
 - Do not bypass the subagent.
 - Always target `AGENTS.md` for memory updates, including when running under Claude Code. Do not redirect updates to `CLAUDE.md`; the user manages any `AGENTS.md` to `CLAUDE.md` symlink.
-- For explicit sweeps, do not return findings until targeted parent transcripts have been line-by-line read by scouts or explicitly accounted for.
+- For explicit sweeps, do not return findings, ask for confirmation, or hand off to reconciliation until one scout per targeted parent transcript has completed or been explicitly marked blocked/skipped with a reason.
 - Do not use grep or term searches as a substitute for full transcript reads.
 - Do not let an incremental index skip files in `full-sweep`, `time-window`, or `current-chat` mode.
 - Do not report a clean result unless the requested transcript set is fully accounted for.
