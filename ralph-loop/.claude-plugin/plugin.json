@@ -1,6 +1,6 @@
 {
   "name": "ralph-loop",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Continuous self-referential AI loops for iterative development, implementing the Ralph Wiggum technique. Run the agent in a while-true loop with the same prompt until task completion.",
   "author": {
     "name": "Cursor",
@@ -23,6 +23,5 @@
     "iteration",
     "agent-loop"
   ],
-  "skills": "./skills/",
-  "hooks": "./hooks/hooks.json"
+  "skills": "./skills/"
 }

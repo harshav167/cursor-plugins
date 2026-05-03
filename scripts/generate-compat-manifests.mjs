@@ -55,9 +55,7 @@ function addClaudeComponents(target, cursorManifest, pluginDir) {
     target.agents = agentPaths;
   }
 
-  if (existsSync(resolve(pluginDir, "hooks/hooks.json"))) {
-    target.hooks = "./hooks/hooks.json";
-  } else if (cursorManifest.hooks !== undefined) {
+  if (!existsSync(resolve(pluginDir, "hooks/hooks.json")) && cursorManifest.hooks !== undefined) {
     target.hooks = cursorManifest.hooks;
   }
 
