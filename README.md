@@ -2,6 +2,8 @@
 
 Official Cursor plugins for popular developer tools, frameworks, and SaaS products. Each plugin is a standalone directory at the repository root with its own `.cursor-plugin/plugin.json` manifest.
 
+The repository also publishes compatibility manifests for Claude Code and Factory/Droid. Those manifests point at the same component directories used by Cursor, so skills, hooks, agents, commands, and MCP configuration are mapped rather than copied.
+
 ## Plugins
 
 | `name` | Plugin | Author | Category | `description` (from marketplace) |
@@ -25,17 +27,53 @@ This is a multi-plugin marketplace repository. The root `.cursor-plugin/marketpl
 plugins/
 ├── .cursor-plugin/
 │   └── marketplace.json       # Marketplace manifest (lists all plugins)
+├── .claude-plugin/
+│   └── marketplace.json       # Claude Code-compatible marketplace manifest
+├── .factory-plugin/
+│   └── marketplace.json       # Factory-compatible marketplace manifest
 ├── plugin-name/
 │   ├── .cursor-plugin/
 │   │   └── plugin.json        # Per-plugin manifest
+│   ├── .claude-plugin/
+│   │   └── plugin.json        # Claude Code-compatible manifest
+│   ├── .factory-plugin/
+│   │   └── plugin.json        # Factory-compatible manifest
 │   ├── skills/                # Agent skills (SKILL.md with frontmatter)
+│   ├── agents/                # Cursor and Claude subagent definitions
+│   ├── droids -> agents       # Factory Droid mapping, when agents exist
 │   ├── rules/                 # Cursor rules (.mdc files)
-│   ├── mcp.json               # MCP server definitions
+│   ├── hooks/                 # Hook definitions, when present
+│   ├── mcp.json               # MCP server definitions, when present
 │   ├── README.md
 │   ├── CHANGELOG.md
 │   └── LICENSE
 └── ...
 ```
+
+## Compatibility mapping
+
+Cursor remains the source of truth. Run the generator after changing a `.cursor-plugin/plugin.json` file:
+
+```bash
+node scripts/generate-compat-manifests.mjs
+```
+
+The generator writes:
+
+- `.claude-plugin/marketplace.json` and each plugin's `.claude-plugin/plugin.json`.
+- `.factory-plugin/marketplace.json` and each plugin's `.factory-plugin/plugin.json`.
+
+Component mappings:
+
+| Cursor | Claude Code | Factory/Droid |
+|:-------|:------------|:--------------|
+| `skills` | `skills` | `skills` |
+| `agents` | `agents` | `droids` |
+| `hooks` | `hooks` | `hooks` |
+| `commands` | `commands` | `commands` |
+| `mcpServers` | `mcpServers` | `mcpServers` |
+
+Factory expects Droid definitions under `droids/`, so plugins with an existing `agents/` directory use a `droids -> agents` symlink. Do not duplicate agent files into `droids/`.
 
 ## License
 

@@ -74,6 +74,10 @@
       "$ref": "#/$defs/stringOrStringArray",
       "description": "Glob pattern(s) or path(s) to agent definition files."
     },
+    "droids": {
+      "$ref": "#/$defs/stringOrStringArray",
+      "description": "Factory-compatible path(s) to Droid/subagent definition files."
+    },
     "skills": {
       "$ref": "#/$defs/stringOrStringArray",
       "description": "Glob pattern(s) or path(s) to skill files."
