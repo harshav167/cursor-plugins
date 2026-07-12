@@ -1,5 +1,9 @@
 {
   "name": "cursor-plugins",
+  "owner": {
+    "name": "Cursor",
+    "email": "plugins@cursor.com"
+  },
   "interface": {
     "displayName": "Cursor Plugins for Oh My Pi"
   },

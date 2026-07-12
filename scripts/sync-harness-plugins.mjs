@@ -285,7 +285,10 @@ function buildMarketplace(name, owner, entries, format) {
             metadata: { description: "Cursor plugins for Factory Droid" },
           }
         : format === "omp"
-          ? { interface: { displayName: "Cursor Plugins for Oh My Pi" } }
+          ? {
+              owner,
+              interface: { displayName: "Cursor Plugins for Oh My Pi" },
+            }
           : { interface: { displayName: "Cursor Plugins for Codex" } }),
     plugins: entries.map((entry) => ({
       name: entry.name,
