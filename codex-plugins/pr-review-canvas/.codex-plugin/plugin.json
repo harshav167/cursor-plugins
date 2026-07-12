@@ -1,0 +1,41 @@
+{
+  "name": "pr-review-canvas",
+  "description": "Render PR diffs as interactive Cursor Canvases organized for reviewer comprehension — groups changes by importance, separates boilerplate from core logic, and highlights tricky or unexpected code.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Cursor",
+    "email": "plugins@cursor.com"
+  },
+  "homepage": "https://github.com/cursor/plugins/tree/main/pr-review-canvas",
+  "repository": "https://github.com/cursor/plugins",
+  "license": "MIT",
+  "keywords": [
+    "cursor-plugin",
+    "canvas",
+    "pr-review",
+    "code-review",
+    "diff",
+    "pull-request"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "PR Review Canvas",
+    "shortDescription": "Render PR diffs as interactive Cursor Canvases organized for reviewer comprehension — groups changes by importance, separates b…",
+    "longDescription": "Render PR diffs as interactive Cursor Canvases organized for reviewer comprehension — groups changes by importance, separates boilerplate from core logic, and highlights tricky or unexpected code.",
+    "developerName": "Cursor",
+    "category": "developer-tools",
+    "capabilities": [
+      "Read"
+    ],
+    "websiteURL": "https://github.com/cursor/plugins/tree/main/pr-review-canvas",
+    "privacyPolicyURL": "https://github.com/cursor/plugins#readme",
+    "termsOfServiceURL": "https://github.com/cursor/plugins/blob/main/LICENSE",
+    "defaultPrompt": [
+      "Use PR Review Canvas"
+    ],
+    "brandColor": "#2563EB",
+    "screenshots": [],
+    "composerIcon": "./assets/avatar.png",
+    "logo": "./assets/avatar.png"
+  }
+}

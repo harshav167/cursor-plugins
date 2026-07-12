@@ -1,0 +1,40 @@
+{
+  "name": "pstack",
+  "description": "if you want to go fast, go deep first. pstack helps you write less, but higher quality code. rigorous agent workflows you can parallelize with confidence.",
+  "version": "0.11.2",
+  "author": {
+    "name": "Lauren Tan"
+  },
+  "homepage": "https://github.com/cursor/plugins/tree/main/pstack",
+  "repository": "https://github.com/cursor/plugins",
+  "license": "MIT",
+  "keywords": [
+    "pstack",
+    "poteto-mode",
+    "workflow",
+    "principles",
+    "agent-style",
+    "subagents",
+    "unslop"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "pstack",
+    "shortDescription": "if you want to go fast, go deep first. pstack helps you write less, but higher quality code. rigorous agent workflows you can p…",
+    "longDescription": "if you want to go fast, go deep first. pstack helps you write less, but higher quality code. rigorous agent workflows you can parallelize with confidence.",
+    "developerName": "Lauren Tan",
+    "category": "developer-tools",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/cursor/plugins/tree/main/pstack",
+    "privacyPolicyURL": "https://github.com/cursor/plugins#readme",
+    "termsOfServiceURL": "https://github.com/cursor/plugins/blob/main/LICENSE",
+    "defaultPrompt": [
+      "Use pstack"
+    ],
+    "brandColor": "#2563EB",
+    "screenshots": []
+  }
+}

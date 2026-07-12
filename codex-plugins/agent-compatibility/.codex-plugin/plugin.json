@@ -1,0 +1,43 @@
+{
+  "name": "agent-compatibility",
+  "description": "CLI-backed repo compatibility scans plus Cursor agents that audit startup, validation, and docs against reality.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Cursor",
+    "email": "plugins@cursor.com"
+  },
+  "homepage": "https://github.com/cursor/plugins/tree/main/agent-compatibility",
+  "repository": "https://github.com/cursor/plugins",
+  "license": "MIT",
+  "keywords": [
+    "agent-compatibility",
+    "agents",
+    "compatibility",
+    "cursor-plugin",
+    "repo-audit",
+    "startup",
+    "validation"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Agent Compatibility",
+    "shortDescription": "CLI-backed repo compatibility scans plus Cursor agents that audit startup, validation, and docs against reality.",
+    "longDescription": "CLI-backed repo compatibility scans plus Cursor agents that audit startup, validation, and docs against reality.",
+    "developerName": "Cursor",
+    "category": "developer-tools",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/cursor/plugins/tree/main/agent-compatibility",
+    "privacyPolicyURL": "https://github.com/cursor/plugins#readme",
+    "termsOfServiceURL": "https://github.com/cursor/plugins/blob/main/LICENSE",
+    "defaultPrompt": [
+      "Use Agent Compatibility"
+    ],
+    "brandColor": "#2563EB",
+    "screenshots": [],
+    "composerIcon": "./assets/avatar.png",
+    "logo": "./assets/avatar.png"
+  }
+}
