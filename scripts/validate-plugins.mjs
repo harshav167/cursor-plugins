@@ -58,7 +58,7 @@ function ensurePath(pluginName, pluginDir, component, relativePath) {
 function ensureComponentPaths(pluginName, pluginDir, manifest, mappings) {
   for (const [component, manifestKey] of mappings) {
     const value = manifest[manifestKey];
-    if (value === undefined || typeof value === "object") {
+    if (value === undefined || (typeof value === "object" && !Array.isArray(value))) {
       continue;
     }
     if (Array.isArray(value)) {
@@ -88,6 +88,8 @@ if (!validateMarketplace(marketplace)) {
 
 const claudeMarketplacePath = resolve(root, ".claude-plugin/marketplace.json");
 const factoryMarketplacePath = resolve(root, ".factory-plugin/marketplace.json");
+const ompMarketplacePath = resolve(root, ".omp-plugin/marketplace.json");
+const codexMarketplacePath = resolve(root, ".agents/plugins/marketplace.json");
 
 if (!existsSync(claudeMarketplacePath)) {
   fail(".claude-plugin/marketplace.json not found");
@@ -96,12 +98,27 @@ if (!existsSync(claudeMarketplacePath)) {
 if (!existsSync(factoryMarketplacePath)) {
   fail(".factory-plugin/marketplace.json not found");
 }
+if (!existsSync(ompMarketplacePath)) {
+  fail(".omp-plugin/marketplace.json not found");
+}
+if (!existsSync(codexMarketplacePath)) {
+  fail(".agents/plugins/marketplace.json not found");
+}
+if (existsSync(resolve(root, "codex-plugins"))) {
+  fail("codex-plugins/ must not exist; Codex must use the canonical plugin directories");
+}
 
 const claudeMarketplace = existsSync(claudeMarketplacePath)
   ? loadJSON(claudeMarketplacePath)
   : { plugins: [] };
 const factoryMarketplace = existsSync(factoryMarketplacePath)
   ? loadJSON(factoryMarketplacePath)
+  : { plugins: [] };
+const ompMarketplace = existsSync(ompMarketplacePath)
+  ? loadJSON(ompMarketplacePath)
+  : { plugins: [] };
+const codexMarketplace = existsSync(codexMarketplacePath)
+  ? loadJSON(codexMarketplacePath)
   : { plugins: [] };
 
 if (existsSync(claudeMarketplacePath) && !validateMarketplace(claudeMarketplace)) {
@@ -119,6 +136,12 @@ const claudeEntries = new Map(
 );
 const factoryEntries = new Map(
   (factoryMarketplace.plugins ?? []).map((entry) => [entry.name, entry])
+);
+const ompEntries = new Map(
+  (ompMarketplace.plugins ?? []).map((entry) => [entry.name, entry])
+);
+const codexEntries = new Map(
+  (codexMarketplace.plugins ?? []).map((entry) => [entry.name, entry])
 );
 
 function expectedCompatSource(source) {
@@ -187,6 +210,33 @@ for (const entry of marketplace.plugins ?? []) {
 
   if (factoryEntries.get(entry.name)?.source !== expectedCompatSource(entry.source)) {
     fail(`Plugin "${entry.name}": Factory marketplace entry is missing or mismatched`);
+  }
+
+  if (ompEntries.get(entry.name)?.source !== expectedCompatSource(entry.source)) {
+    fail(`Plugin "${entry.name}": OMP marketplace entry is missing or mismatched`);
+  }
+
+  const codexEntry = codexEntries.get(entry.name);
+  if (
+    codexEntry?.source?.source !== "local" ||
+    codexEntry.source.path !== expectedCompatSource(entry.source)
+  ) {
+    fail(`Plugin "${entry.name}": Codex marketplace entry is missing or mismatched`);
+  }
+
+  const codexPluginJsonPath = resolve(pluginDir, ".codex-plugin/plugin.json");
+  if (!existsSync(codexPluginJsonPath)) {
+    fail(`Plugin "${entry.name}": missing .codex-plugin/plugin.json in "${entry.source}"`);
+  } else {
+    const codexPluginJson = loadJSON(codexPluginJsonPath);
+    if (codexPluginJson.name !== entry.name) {
+      fail(`Plugin "${entry.name}": Codex plugin.json name does not match "${entry.name}"`);
+    }
+    ensureComponentPaths(entry.name, pluginDir, codexPluginJson, [
+      ["skills", "skills"],
+      ["apps", "apps"],
+      ["mcpServers", "mcpServers"],
+    ]);
   }
 
   if (!existsSync(claudePluginJsonPath)) {

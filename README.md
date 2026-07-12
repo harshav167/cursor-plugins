@@ -40,12 +40,16 @@ plugins/
 └── ...
 ```
 
-## Claude Code, Factory, and Codex support
+## Claude Code, Factory, Pi, and Codex support
 
-This fork projects the Cursor marketplace into native Claude Code, Factory Droid, and Codex plugin
-definitions. Run node scripts/sync-harness-plugins.mjs after changing a Cursor plugin; CI checks
-that generated manifests, marketplaces, hooks, and Factory droids stay synchronized. The scheduled
-Sync upstream plugins workflow merges cursor/plugins, regenerates these projections, validates them,
+This fork projects the Cursor marketplace into native Claude Code, Factory Droid, Oh My Pi, and
+Codex plugin definitions. Every plugin keeps one canonical `skills/`, `agents/`, `hooks/`, and
+supporting-file tree. The generated harness files are only manifests, catalogs, hook-format
+projections, and Factory `droids -> agents` symlinks; there is no duplicated Codex content tree.
+
+Run `node scripts/sync-harness-plugins.mjs` after changing a Cursor plugin. CI checks that the
+generated manifests, marketplaces, hooks, and symlinks stay synchronized. The scheduled Sync
+upstream plugins workflow merges `cursor/plugins`, regenerates these projections, validates them,
 and opens a pull request with the result.
 
 See docs/plugin-harness-sync.md for the component mapping and current harness documentation.

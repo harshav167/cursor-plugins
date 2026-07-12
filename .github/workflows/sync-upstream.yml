@@ -41,7 +41,7 @@ jobs:
         with:
           node-version: 20
 
-      - name: Normalize Claude Code, Factory, and Codex plugins
+      - name: Generate Claude Code, Factory, Pi, and Codex projections
         run: node scripts/sync-harness-plugins.mjs
 
       - name: Validate generated harness output
@@ -60,6 +60,6 @@ jobs:
           title: "chore: sync upstream Cursor plugins"
           commit-message: "chore: sync upstream Cursor plugins"
           body: |
-            Updates this fork from \${UPSTREAM_REPOSITORY}@\${UPSTREAM_REF} and regenerates the Claude Code, Factory, and Codex plugin projections.
+            Updates this fork from \${UPSTREAM_REPOSITORY}@\${UPSTREAM_REF} and regenerates the Claude Code, Factory, Pi, and Codex projections from the canonical plugin directories.
 
             Generated output is checked by the repository validator before this pull request is opened.

@@ -8,7 +8,7 @@
       "name": "teaching",
       "source": {
         "source": "local",
-        "path": "./codex-plugins/teaching"
+        "path": "./teaching"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -20,7 +20,7 @@
       "name": "continual-learning",
       "source": {
         "source": "local",
-        "path": "./codex-plugins/continual-learning"
+        "path": "./continual-learning"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -32,7 +32,7 @@
       "name": "cursor-team-kit",
       "source": {
         "source": "local",
-        "path": "./codex-plugins/cursor-team-kit"
+        "path": "./cursor-team-kit"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -44,7 +44,7 @@
       "name": "thermos",
       "source": {
         "source": "local",
-        "path": "./codex-plugins/thermos"
+        "path": "./thermos"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -56,7 +56,7 @@
       "name": "create-plugin",
       "source": {
         "source": "local",
-        "path": "./codex-plugins/create-plugin"
+        "path": "./create-plugin"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -68,7 +68,7 @@
       "name": "ralph-loop",
       "source": {
         "source": "local",
-        "path": "./codex-plugins/ralph-loop"
+        "path": "./ralph-loop"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -80,7 +80,7 @@
       "name": "agent-compatibility",
       "source": {
         "source": "local",
-        "path": "./codex-plugins/agent-compatibility"
+        "path": "./agent-compatibility"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -92,7 +92,7 @@
       "name": "cli-for-agent",
       "source": {
         "source": "local",
-        "path": "./codex-plugins/cli-for-agent"
+        "path": "./cli-for-agent"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -104,7 +104,7 @@
       "name": "pr-review-canvas",
       "source": {
         "source": "local",
-        "path": "./codex-plugins/pr-review-canvas"
+        "path": "./pr-review-canvas"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -116,7 +116,7 @@
       "name": "docs-canvas",
       "source": {
         "source": "local",
-        "path": "./codex-plugins/docs-canvas"
+        "path": "./docs-canvas"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -128,7 +128,7 @@
       "name": "cursor-sdk",
       "source": {
         "source": "local",
-        "path": "./codex-plugins/cursor-sdk"
+        "path": "./cursor-sdk"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -140,7 +140,7 @@
       "name": "orchestrate",
       "source": {
         "source": "local",
-        "path": "./codex-plugins/orchestrate"
+        "path": "./orchestrate"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -152,7 +152,7 @@
       "name": "pstack",
       "source": {
         "source": "local",
-        "path": "./codex-plugins/pstack"
+        "path": "./pstack"
       },
       "policy": {
         "installation": "AVAILABLE",

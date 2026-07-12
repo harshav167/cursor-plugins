@@ -20,8 +20,8 @@ const checkOnly = process.argv.includes("--check");
 const CURSOR_MARKETPLACE = ".cursor-plugin/marketplace.json";
 const CLAUDE_MARKETPLACE = ".claude-plugin/marketplace.json";
 const FACTORY_MARKETPLACE = ".factory-plugin/marketplace.json";
+const OMP_MARKETPLACE = ".omp-plugin/marketplace.json";
 const CODEX_MARKETPLACE = ".agents/plugins/marketplace.json";
-const CODEX_OUTPUT_ROOT = "codex-plugins";
 const CLAUDE_MARKETPLACE_REPO =
   process.env.CLAUDE_MARKETPLACE_REPO ?? "harshav167/cursor-plugins";
 
@@ -93,55 +93,6 @@ function addJsonOutput(outputs, path, value) {
 
 function hasDirectory(path) {
   return existsSync(path);
-}
-
-function copyFilesRecursively(sourceDirectory, destinationDirectory, transform, outputs) {
-  for (const entry of readdirSync(sourceDirectory, { withFileTypes: true })) {
-    const sourcePath = resolve(sourceDirectory, entry.name);
-    const destinationPath = resolve(destinationDirectory, entry.name);
-    if (entry.isDirectory()) {
-      copyFilesRecursively(sourcePath, destinationPath, transform, outputs);
-      continue;
-    }
-    const sourceContents = readFileSync(sourcePath, "utf8");
-    const contents = transform ? transform(sourceContents, sourcePath) : sourceContents;
-    outputs.set(destinationPath, contents);
-  }
-}
-
-function normalizeFactoryAgent(contents) {
-  if (!contents.startsWith("---\n")) return contents;
-  const end = contents.indexOf("\n---", 4);
-  if (end === -1) return contents;
-
-  const frontmatter = contents
-    .slice(4, end)
-    .split("\n")
-    .filter((line) => !/^readonly:\s*true\s*$/.test(line))
-    .filter((line) => !/^is_background:\s*true\s*$/.test(line));
-  if (!frontmatter.some((line) => /^tools:/.test(line)) && contents.includes("readonly: true")) {
-    frontmatter.push("tools: read-only");
-  }
-  return `---\n${frontmatter.join("\n")}\n---${contents.slice(end + 4)}`;
-}
-
-function normalizeCodexSkill(contents, sourcePath) {
-  if (!sourcePath.endsWith("/SKILL.md") || !contents.startsWith("---\n")) return contents;
-  const end = contents.indexOf("\n---", 4);
-  if (end === -1) return contents;
-  const frontmatter = contents
-    .slice(4, end)
-    .split("\n")
-    .filter((line) => !/^disable-model-invocation:\s*true\s*$/.test(line))
-    .filter((line) => !/^disable_model_invocation:\s*true\s*$/.test(line))
-    .map((line) => {
-      if (!line.startsWith("description:")) return line;
-      const value = line.slice("description:".length).trim();
-      if (value.startsWith(">") || value.startsWith("|")) return line;
-      const unquoted = value.replace(/^("|')|("|')$/g, "");
-      return "description: " + JSON.stringify(unquoted);
-    });
-  return "---\n" + frontmatter.join("\n") + "\n---" + contents.slice(end + 4);
 }
 
 function normalizeHookCommand(command) {
@@ -256,15 +207,18 @@ function commonManifestFields(sourceManifest, marketplaceEntry) {
 function buildClaudeManifest(sourceManifest, pluginDirectory) {
   const manifest = commonManifestFields(sourceManifest, {});
   for (const [key, relativePath] of [
-   ["skills", "./skills/"],
-   ["commands", "./commands/"],
-   ["mcpServers", "./.mcp.json"],
- ]) {
+    ["skills", "./skills/"],
+    ["commands", "./commands/"],
+    ["mcpServers", "./.mcp.json"],
+  ]) {
     const pathValue = Array.isArray(relativePath) ? relativePath[0] : relativePath;
     const path = resolve(pluginDirectory, pathValue.slice(2).replace("/**/*.md", ""));
     if (key === "mcpServers" ? existsSync(path) : hasDirectory(path)) {
       manifest[key] = relativePath;
     }
+  }
+  if (existsSync(resolve(pluginDirectory, "hooks/hooks.json"))) {
+    manifest.hooks = "./hooks/hooks.json";
   }
   const agentsDirectory = resolve(pluginDirectory, "agents");
   if (hasDirectory(agentsDirectory)) {
@@ -289,6 +243,7 @@ function buildCodexManifest(sourceManifest, pluginDirectory) {
   const manifest = commonManifestFields(sourceManifest, {});
   if (Array.isArray(sourceManifest.keywords)) manifest.keywords = sourceManifest.keywords;
   if (hasDirectory(resolve(pluginDirectory, "skills"))) manifest.skills = "./skills/";
+  if (existsSync(resolve(pluginDirectory, ".app.json"))) manifest.apps = "./.app.json";
   if (existsSync(resolve(pluginDirectory, ".mcp.json"))) manifest.mcpServers = "./.mcp.json";
 
   const displayName = sourceManifest.displayName ?? sourceManifest.name;
@@ -329,12 +284,14 @@ function buildMarketplace(name, owner, entries, format) {
             owner,
             metadata: { description: "Cursor plugins for Factory Droid" },
           }
-        : { interface: { displayName: "Cursor Plugins for Codex" } }),
+        : format === "omp"
+          ? { interface: { displayName: "Cursor Plugins for Oh My Pi" } }
+          : { interface: { displayName: "Cursor Plugins for Codex" } }),
     plugins: entries.map((entry) => ({
       name: entry.name,
       ...(format === "codex"
         ? {
-            source: { source: "local", path: `./${entry.codexSource}` },
+            source: { source: "local", path: `./${entry.source}` },
             policy: { installation: "AVAILABLE", authentication: "ON_INSTALL" },
             category: entry.category ?? "Developer Tools",
           }
@@ -347,6 +304,8 @@ function buildMarketplace(name, owner, entries, format) {
                 ref: "main",
               },
             }
+          : format === "omp"
+            ? { source: `./${entry.source}`, description: entry.description }
           : { source: `./${entry.source}` }),
     })),
   };
@@ -375,40 +334,16 @@ function planOutputs() {
       `${marketplaceEntry.source}/.claude-plugin/plugin.json`,
       buildClaudeManifest(cursorManifest, pluginDirectory),
     );
-   addJsonOutput(
-     outputs,
-     `${marketplaceEntry.source}/.factory-plugin/plugin.json`,
-     buildFactoryManifest(cursorManifest, marketplaceEntry, pluginDirectory),
-   );
-    const codexSource = `codex-plugins/${cursorManifest.name}`;
-    const codexDirectory = resolve(root, codexSource);
     addJsonOutput(
-     outputs,
-     `${codexSource}/.codex-plugin/plugin.json`,
+      outputs,
+      `${marketplaceEntry.source}/.factory-plugin/plugin.json`,
+      buildFactoryManifest(cursorManifest, marketplaceEntry, pluginDirectory),
+    );
+    addJsonOutput(
+      outputs,
+      `${marketplaceEntry.source}/.codex-plugin/plugin.json`,
       buildCodexManifest(cursorManifest, pluginDirectory),
-   );
-    if (hasDirectory(resolve(pluginDirectory, "skills"))) {
-      copyFilesRecursively(
-        resolve(pluginDirectory, "skills"),
-        resolve(codexDirectory, "skills"),
-        normalizeCodexSkill,
-        outputs,
-      );
-    }
-    if (hasDirectory(resolve(pluginDirectory, "assets"))) {
-      copyFilesRecursively(
-        resolve(pluginDirectory, "assets"),
-        resolve(codexDirectory, "assets"),
-        null,
-        outputs,
-      );
-    }
-    for (const fileName of [".app.json", ".mcp.json", "CHANGELOG.md", "LICENSE", "README.md"]) {
-      const sourcePath = resolve(pluginDirectory, fileName);
-      if (existsSync(sourcePath)) {
-        addOutput(outputs, `${codexSource}/${fileName}`, readFileSync(sourcePath, "utf8"));
-      }
-    }
+    );
 
     const agentsDirectory = resolve(pluginDirectory, "agents");
     if (hasDirectory(agentsDirectory)) {
@@ -421,7 +356,7 @@ function planOutputs() {
       addOutput(outputs, `${marketplaceEntry.source}/mcp.json`, readFileSync(mcpPath, "utf8"));
     }
 
-    entries.push({ ...marketplaceEntry, name: cursorManifest.name, codexSource });
+    entries.push({ ...marketplaceEntry, name: cursorManifest.name });
   }
 
   addJsonOutput(
@@ -433,6 +368,11 @@ function planOutputs() {
     outputs,
     FACTORY_MARKETPLACE,
     buildMarketplace("cursor-plugins", { name: "Cursor", email: "plugins@cursor.com" }, entries, "factory"),
+  );
+  addJsonOutput(
+    outputs,
+    OMP_MARKETPLACE,
+    buildMarketplace("cursor-plugins", { name: "Cursor", email: "plugins@cursor.com" }, entries, "omp"),
   );
   addJsonOutput(
     outputs,
@@ -500,5 +440,4 @@ export {
   buildClaudeManifest,
   buildFactoryManifest,
   buildPortableHooks,
-  normalizeFactoryAgent,
 };

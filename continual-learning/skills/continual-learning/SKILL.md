@@ -1,7 +1,7 @@
 ---
 name: continual-learning
 description: Orchestrate continual learning by selecting the right host transcript source and delegating AGENTS.md updates to `agents-memory-updater`.
-disable-model-invocation: true
+disable-model-invocation: false
 ---
 
 # Continual Learning
