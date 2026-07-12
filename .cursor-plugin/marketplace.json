@@ -24,6 +24,11 @@
       "description": "Internal team workflows used by Cursor developers for CI, code review, shipping, local automation, and verification."
     },
     {
+      "name": "thermos",
+      "source": "thermos",
+      "description": "Thermo-nuclear branch review: deep security/correctness audits, harsh code-quality rubrics, parallel subagents, thermos orchestration, and optional merge-ready PR flows."
+    },
+    {
       "name": "create-plugin",
       "source": "create-plugin",
       "description": "Scaffold and validate new Cursor plugins."
@@ -57,6 +62,16 @@
       "name": "cursor-sdk",
       "source": "cursor-sdk",
       "description": "Build apps, scripts, CI pipelines, and automations on top of the Cursor TypeScript SDK (@cursor/sdk) — runtime selection, auth, streaming, MCP, error handling, and ready-to-extend integration patterns."
+    },
+    {
+      "name": "orchestrate",
+      "source": "orchestrate",
+      "description": "Fan large tasks out across parallel Cursor cloud agents with planners, workers, verifiers, and structured handoffs."
+    },
+    {
+      "name": "pstack",
+      "source": "pstack",
+      "description": "if you want to go fast, go deep first. pstack helps you write less, but higher quality code. rigorous agent workflows you can parallelize with confidence."
     }
   ]
 }
