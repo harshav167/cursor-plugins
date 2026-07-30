@@ -1,0 +1,65 @@
+name: Sync upstream plugins
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+    inputs:
+      upstream_repository:
+        description: "GitHub repository to sync from"
+        required: false
+        default: "cursor/plugins"
+      upstream_ref:
+        description: "Upstream branch or tag"
+        required: false
+        default: "main"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      UPSTREAM_REPOSITORY: ${{ inputs.upstream_repository || 'cursor/plugins' }}
+      UPSTREAM_REF: ${{ inputs.upstream_ref || 'main' }}
+    steps:
+      - name: Check out the fork default branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+
+      - name: Merge upstream changes
+        run: |
+          git fetch --no-tags "https://github.com/\${UPSTREAM_REPOSITORY}.git" "\${UPSTREAM_REF}"
+          git merge --no-edit --no-ff FETCH_HEAD
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Normalize Claude Code, Factory, and Codex plugins
+        run: node scripts/sync-harness-plugins.mjs
+
+      - name: Validate generated harness output
+        run: |
+          node --test scripts/sync-harness-plugins.test.mjs
+          node scripts/sync-harness-plugins.mjs --check
+          npm install --no-save ajv ajv-formats
+          node scripts/validate-plugins.mjs
+
+      - name: Open or update upstream sync pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          base: ${{ github.event.repository.default_branch }}
+          branch: automation/upstream-sync
+          delete-branch: true
+          title: "chore: sync upstream Cursor plugins"
+          commit-message: "chore: sync upstream Cursor plugins"
+          body: |
+            Updates this fork from \${UPSTREAM_REPOSITORY}@\${UPSTREAM_REF} and regenerates the Claude Code, Factory, and Codex plugin projections.
+
+            Generated output is checked by the repository validator before this pull request is opened.

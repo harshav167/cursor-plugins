@@ -1,15 +1,23 @@
 {
-  "version": 1,
   "hooks": {
-    "afterAgentResponse": [
+    "Stop": [
       {
-        "command": "./hooks/capture-response.sh"
-      }
-    ],
-    "stop": [
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/capture-response.sh\""
+          }
+        ]
+      },
       {
-        "command": "./hooks/stop-hook.sh",
-        "loop_limit": null
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/stop-hook.sh\""
+          }
+        ]
       }
     ]
   }

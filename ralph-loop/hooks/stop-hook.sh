@@ -12,7 +12,7 @@ set -euo pipefail
 
 HOOK_INPUT=$(cat)
 
-PROJECT_DIR="${CURSOR_PROJECT_DIR:-.}"
+PROJECT_DIR="${CLAUDE_PROJECT_DIR:-${FACTORY_PROJECT_DIR:-${CURSOR_PROJECT_DIR:-.}}}"
 STATE_FILE="$PROJECT_DIR/.cursor/ralph/scratchpad.md"
 DONE_FLAG="$PROJECT_DIR/.cursor/ralph/done"
 

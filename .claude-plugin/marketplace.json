@@ -1,0 +1,129 @@
+{
+  "name": "cursor-plugins",
+  "owner": {
+    "name": "Cursor",
+    "email": "plugins@cursor.com"
+  },
+  "metadata": {
+    "description": "Cursor plugins for Claude Code"
+  },
+  "plugins": [
+    {
+      "name": "teaching",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "teaching",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "continual-learning",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "continual-learning",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "cursor-team-kit",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "cursor-team-kit",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "thermos",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "thermos",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "create-plugin",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "create-plugin",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "ralph-loop",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "ralph-loop",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "agent-compatibility",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "agent-compatibility",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "cli-for-agent",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "cli-for-agent",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "pr-review-canvas",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "pr-review-canvas",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "docs-canvas",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "docs-canvas",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "cursor-sdk",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "cursor-sdk",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "orchestrate",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "orchestrate",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "pstack",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "pstack",
+        "ref": "main"
+      }
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "name": "cli-for-agent",
+  "description": "Patterns for designing CLIs that coding agents can run reliably: non-interactive flags, layered help with examples, pipelines, actionable errors, idempotency, and dry-run.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Cursor",
+    "email": "plugins@cursor.com"
+  },
+  "homepage": "https://github.com/cursor/plugins/tree/main/cli-for-agent",
+  "repository": "https://github.com/cursor/plugins",
+  "license": "MIT",
+  "keywords": [
+    "cli",
+    "command-line",
+    "agents",
+    "automation",
+    "terminal",
+    "flags",
+    "help"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "CLI for Agents",
+    "shortDescription": "Patterns for designing CLIs that coding agents can run reliably: non-interactive flags, layered help with examples, pipelines,…",
+    "longDescription": "Patterns for designing CLIs that coding agents can run reliably: non-interactive flags, layered help with examples, pipelines, actionable errors, idempotency, and dry-run.",
+    "developerName": "Cursor",
+    "category": "developer-tools",
+    "capabilities": [
+      "Read"
+    ],
+    "websiteURL": "https://github.com/cursor/plugins/tree/main/cli-for-agent",
+    "privacyPolicyURL": "https://github.com/cursor/plugins#readme",
+    "termsOfServiceURL": "https://github.com/cursor/plugins/blob/main/LICENSE",
+    "defaultPrompt": [
+      "Use CLI for Agents"
+    ],
+    "brandColor": "#2563EB",
+    "screenshots": []
+  }
+}

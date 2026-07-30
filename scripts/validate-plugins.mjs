@@ -17,12 +17,16 @@ const marketplaceSchema = loadJSON(
   resolve(root, "schemas/marketplace.schema.json")
 );
 const pluginSchema = loadJSON(resolve(root, "schemas/plugin.schema.json"));
+const ompMarketplaceSchema = loadJSON(
+  resolve(root, "schemas/omp-marketplace.schema.json")
+);
 
 const ajv = new Ajv({ allErrors: true });
 addFormats(ajv);
 
 const validateMarketplace = ajv.compile(marketplaceSchema);
 const validatePlugin = ajv.compile(pluginSchema);
+const validateOmpMarketplace = ajv.compile(ompMarketplaceSchema);
 
 let errors = 0;
 
@@ -92,7 +96,62 @@ for (const entry of marketplace.plugins ?? []) {
   }
 }
 
-// 3. Report results
+// 3. Validate OMP marketplace
+const ompMarketplacePath = resolve(root, ".omp-plugin/marketplace.json");
+if (!existsSync(ompMarketplacePath)) {
+  fail(".omp-plugin/marketplace.json not found");
+} else {
+  const ompMarketplace = loadJSON(ompMarketplacePath);
+  if (!validateOmpMarketplace(ompMarketplace)) {
+    fail("OMP marketplace.json schema validation failed:");
+    for (const err of validateOmpMarketplace.errors) {
+      console.error(`  ${err.instancePath || "/"}: ${err.message}`);
+    }
+  } else {
+    const cursorEntries = new Map(
+      marketplace.plugins.map((plugin) => [plugin.name, plugin])
+    );
+    for (const entry of ompMarketplace.plugins ?? []) {
+      const cursorEntry = cursorEntries.get(entry.name);
+      if (!cursorEntry) {
+        fail(`OMP plugin "${entry.name}" has no matching Cursor marketplace entry`);
+        continue;
+      }
+      const expectedSource = `./${cursorEntry.source.replace(/^\.\//, "")}`;
+      if (entry.source !== expectedSource) {
+        fail(
+          `OMP plugin "${entry.name}": source must be canonical ${expectedSource}, found ${entry.source}`
+        );
+      }
+      const projDir = resolve(root, entry.source);
+      const projManifest = resolve(projDir, ".claude-plugin/plugin.json");
+      if (!existsSync(projManifest)) {
+        fail(`OMP plugin "${entry.name}": missing projection manifest at ${entry.source}/.claude-plugin/plugin.json`);
+        continue;
+      }
+      const projJson = loadJSON(projManifest);
+      if (projJson.name && projJson.name !== entry.name) {
+        fail(`OMP plugin "${entry.name}": projection name mismatch "${projJson.name}"`);
+      }
+      if (entry.version && projJson.version && entry.version !== projJson.version) {
+        fail(`OMP plugin "${entry.name}": version mismatch catalog=${entry.version} manifest=${projJson.version}`);
+      }
+    }
+    if ((ompMarketplace.plugins ?? []).length !== (marketplace.plugins ?? []).length) {
+      fail(
+        `OMP marketplace has ${ompMarketplace.plugins?.length ?? 0} plugins, Cursor has ${marketplace.plugins?.length ?? 0}`
+      );
+    }
+  }
+}
+
+for (const staleProjectionDirectory of ["codex-plugins", "omp-plugins"]) {
+  if (existsSync(resolve(root, staleProjectionDirectory))) {
+    fail(`${staleProjectionDirectory}/ must not exist; marketplace entries use canonical plugin directories`);
+  }
+}
+
+// 4. Report results
 if (errors > 0) {
   console.error(`\nValidation failed with ${errors} error(s).`);
   process.exit(1);

@@ -1,0 +1,42 @@
+{
+  "name": "orchestrate",
+  "description": "Fan a large task out across parallel Cursor cloud agents via the Cursor SDK: planners publish tasks, workers hand off back up, and a script reconciles the tree from disk and git.",
+  "version": "1.1.0",
+  "author": {
+    "name": "Cursor",
+    "email": "plugins@cursor.com"
+  },
+  "homepage": "https://github.com/cursor/plugins/tree/main/orchestrate",
+  "repository": "https://github.com/cursor/plugins",
+  "license": "MIT",
+  "keywords": [
+    "orchestrate",
+    "cursor",
+    "cursor-sdk",
+    "agents",
+    "cloud-agents",
+    "parallel",
+    "automation"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Orchestrate",
+    "shortDescription": "Fan a large task out across parallel Cursor cloud agents via the Cursor SDK: planners publish tasks, workers hand off back up,…",
+    "longDescription": "Fan a large task out across parallel Cursor cloud agents via the Cursor SDK: planners publish tasks, workers hand off back up, and a script reconciles the tree from disk and git.",
+    "developerName": "Cursor",
+    "category": "developer-tools",
+    "capabilities": [
+      "Read"
+    ],
+    "websiteURL": "https://github.com/cursor/plugins/tree/main/orchestrate",
+    "privacyPolicyURL": "https://github.com/cursor/plugins#readme",
+    "termsOfServiceURL": "https://github.com/cursor/plugins/blob/main/LICENSE",
+    "defaultPrompt": [
+      "Use Orchestrate"
+    ],
+    "brandColor": "#2563EB",
+    "screenshots": [],
+    "composerIcon": "./assets/avatar.png",
+    "logo": "./assets/avatar.png"
+  }
+}

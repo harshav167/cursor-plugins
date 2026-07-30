@@ -1,10 +1,41 @@
 name: Validate plugins
 
 on:
+  push:
+    paths:
+      - ".cursor-plugin/**"
+      - ".claude-plugin/**"
+      - ".factory-plugin/**"
+      - ".omp-plugin/**"
+      - ".agents/**"
+      - "**/.cursor-plugin/**"
+      - "**/.claude-plugin/**"
+      - "**/.factory-plugin/**"
+      - "**/.codex-plugin/**"
+      - "**/.omp-plugin/**"
+      - "omp-plugins/**"
+      - "**/agents/**"
+      - "**/droids/**"
+      - "**/hooks/**"
+      - "scripts/**"
+      - "schemas/**"
   pull_request:
     paths:
-      - ".cursor-plugin/marketplace.json"
-      - "**/plugin.json"
+      - ".cursor-plugin/**"
+      - ".claude-plugin/**"
+      - ".factory-plugin/**"
+      - ".omp-plugin/**"
+      - ".agents/**"
+      - "**/.cursor-plugin/**"
+      - "**/.claude-plugin/**"
+      - "**/.factory-plugin/**"
+      - "**/.codex-plugin/**"
+      - "**/.omp-plugin/**"
+      - "omp-plugins/**"
+      - "**/agents/**"
+      - "**/droids/**"
+      - "**/hooks/**"
+      - "scripts/**"
       - "schemas/**"
 
 jobs:
@@ -22,3 +53,8 @@ jobs:
 
       - name: Validate plugin definitions
         run: node scripts/validate-plugins.mjs
+
+      - name: Validate harness projections
+        run: |
+          node --test scripts/sync-harness-plugins.test.mjs
+          node scripts/sync-harness-plugins.mjs --check
