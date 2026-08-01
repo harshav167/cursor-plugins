@@ -1,0 +1,38 @@
+{
+  "name": "google-drive",
+  "description": "Connect Cursor to Google Drive via Google's remote MCP server — search, read, create, share, and manage files.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Cursor",
+    "email": "plugins@cursor.com"
+  },
+  "homepage": "https://github.com/cursor/plugins/tree/main/google-drive",
+  "repository": "https://github.com/cursor/plugins",
+  "license": "MIT",
+  "keywords": [
+    "google-drive",
+    "drive",
+    "google",
+    "mcp",
+    "files",
+    "workspace"
+  ],
+  "interface": {
+    "displayName": "Google Drive",
+    "shortDescription": "Connect Cursor to Google Drive via Google's remote MCP server — search, read, create, share, and manage files.",
+    "longDescription": "Connect Cursor to Google Drive via Google's remote MCP server — search, read, create, share, and manage files.",
+    "developerName": "Cursor",
+    "category": "productivity",
+    "capabilities": [
+      "Read"
+    ],
+    "websiteURL": "https://github.com/cursor/plugins/tree/main/google-drive",
+    "privacyPolicyURL": "https://github.com/cursor/plugins#readme",
+    "termsOfServiceURL": "https://github.com/cursor/plugins/blob/main/LICENSE",
+    "defaultPrompt": [
+      "Use Google Drive"
+    ],
+    "brandColor": "#2563EB",
+    "screenshots": []
+  }
+}

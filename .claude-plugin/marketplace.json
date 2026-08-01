@@ -124,6 +124,60 @@
         "path": "pstack",
         "ref": "main"
       }
+    },
+    {
+      "name": "gmail",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "gmail",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "google-drive",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "google-drive",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "google-calendar",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "google-calendar",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "google-docs",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "google-docs",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "google-sheets",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "google-sheets",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "google-slides",
+      "source": {
+        "source": "git-subdir",
+        "url": "harshav167/cursor-plugins",
+        "path": "google-slides",
+        "ref": "main"
+      }
     }
   ]
 }

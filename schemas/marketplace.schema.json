@@ -63,9 +63,24 @@
           "description": "Plugin identifier matching the plugin's name in its plugin.json."
         },
         "source": {
-          "type": "string",
-          "minLength": 1,
-          "description": "Path to the plugin directory (relative to the marketplace root) or a remote URL."
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "object",
+              "required": ["source"],
+              "additionalProperties": true,
+              "properties": {
+                "source": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          ],
+          "description": "Path to the plugin directory, a remote URL, or a typed marketplace source object."
         },
         "description": {
           "type": "string",

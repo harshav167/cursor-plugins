@@ -85,6 +85,42 @@
       "source": "./pstack",
       "description": "if you want to go fast, go deep first. pstack helps you write less, but higher quality code. rigorous agent workflows you can parallelize with confidence.",
       "category": "Developer Tools"
+    },
+    {
+      "name": "gmail",
+      "source": "./gmail",
+      "description": "Connect Cursor to Gmail via Google's remote MCP server — search, read, draft, label, and manage email.",
+      "category": "Developer Tools"
+    },
+    {
+      "name": "google-drive",
+      "source": "./google-drive",
+      "description": "Connect Cursor to Google Drive via Google's remote MCP server — search, read, create, share, and manage files.",
+      "category": "Developer Tools"
+    },
+    {
+      "name": "google-calendar",
+      "source": "./google-calendar",
+      "description": "Connect Cursor to Google Calendar via Google's remote MCP server — list calendars, search events, and create or update meetings.",
+      "category": "Developer Tools"
+    },
+    {
+      "name": "google-docs",
+      "source": "./google-docs",
+      "description": "Connect Cursor to Google Docs via Google's remote MCP server — read and update documents.",
+      "category": "Developer Tools"
+    },
+    {
+      "name": "google-sheets",
+      "source": "./google-sheets",
+      "description": "Connect Cursor to Google Sheets via Google's remote MCP server — read spreadsheets, update values and formulas.",
+      "category": "Developer Tools"
+    },
+    {
+      "name": "google-slides",
+      "source": "./google-slides",
+      "description": "Connect Cursor to Google Slides via Google's remote MCP server — read and update presentations.",
+      "category": "Developer Tools"
     }
   ]
 }
